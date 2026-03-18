@@ -73,7 +73,7 @@ public class VentaController {
     }
     
     @PostMapping
-    public ResponseEntity<?> crear(@Valid @RequestBody VentaRequestDto request, Authentication authentication) {
+    public ResponseEntity<Object> crear(@Valid @RequestBody VentaRequestDto request, Authentication authentication) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED)
                 .body(ventaService.crear(mapearVenta(request, authentication)));

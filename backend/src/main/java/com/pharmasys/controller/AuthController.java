@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -39,7 +40,7 @@ public class AuthController {
     private String sameSite;
     
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody LoginRequestDto loginRequest, HttpServletResponse response) {
+    public ResponseEntity<Map<String, Object>> login(@Valid @RequestBody LoginRequestDto loginRequest, HttpServletResponse response) {
         try {
             // Autenticar usuario
             authenticationManager.authenticate(
@@ -56,7 +57,7 @@ public class AuthController {
             
             // Obtener datos del usuario
             Usuario usuario = usuarioService.buscarPorUsername(loginRequest.getUsername())
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new NoSuchElementException("Usuario no encontrado"));
             
             // Crear respuesta
             Map<String, Object> responseBody = new HashMap<>();
@@ -80,7 +81,7 @@ public class AuthController {
     }
     
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(HttpServletResponse response) {
+    public ResponseEntity<Map<String, Object>> logout(HttpServletResponse response) {
         response.addHeader(HttpHeaders.SET_COOKIE, clearAuthCookie().toString());
         
         Map<String, Object> responseBody = new HashMap<>();
@@ -91,7 +92,7 @@ public class AuthController {
     }
     
     @GetMapping("/validate")
-    public ResponseEntity<?> validate(Authentication authentication, HttpServletResponse response) {
+    public ResponseEntity<Map<String, Object>> validate(Authentication authentication, HttpServletResponse response) {
         if (authentication == null || !authentication.isAuthenticated()) {
             response.addHeader(HttpHeaders.SET_COOKIE, clearAuthCookie().toString());
 
@@ -103,7 +104,7 @@ public class AuthController {
 
         try {
             Usuario usuario = usuarioService.buscarPorUsername(authentication.getName())
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new NoSuchElementException("Usuario no encontrado"));
 
             if (!usuario.getActivo()) {
                 response.addHeader(HttpHeaders.SET_COOKIE, clearAuthCookie().toString());

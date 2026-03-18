@@ -65,7 +65,7 @@ public class CompraController {
     }
     
     @PostMapping
-    public ResponseEntity<?> crear(@Valid @RequestBody CompraRequestDto request, Authentication authentication) {
+    public ResponseEntity<Object> crear(@Valid @RequestBody CompraRequestDto request, Authentication authentication) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED)
                 .body(compraService.crear(mapearCompra(request, authentication)));
@@ -88,7 +88,7 @@ public class CompraController {
     }
     
     @PutMapping("/{id}/recibir")
-    public ResponseEntity<?> marcarComoRecibida(@PathVariable Long id) {
+    public ResponseEntity<Map<String, Object>> marcarComoRecibida(@PathVariable Long id) {
         try {
             compraService.marcarComoRecibida(id);
             return ResponseEntity.ok(Map.of(

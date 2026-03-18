@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
@@ -129,7 +130,7 @@ public class ProductoController {
      * Crear producto con imagen (FormData)
      */
     @PostMapping(value = "/con-imagen", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> crearConImagen(
+    public ResponseEntity<Object> crearConImagen(
             @Valid @RequestPart("producto") ProductoRequestDto productoRequest,
             @RequestPart(value = "imagen", required = false) MultipartFile imagen) {
         try {
@@ -157,7 +158,7 @@ public class ProductoController {
      * Actualizar producto con imagen opcional (FormData)
      */
         @PutMapping(value = "/{id}/con-imagen", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> actualizarConImagen(
+    public ResponseEntity<Object> actualizarConImagen(
             @PathVariable Long id,
             @Valid @RequestPart("producto") ProductoRequestDto productoRequest,
             @RequestPart(value = "imagen", required = false) MultipartFile imagen) {
@@ -165,7 +166,7 @@ public class ProductoController {
             Producto productoActualizado = toEntity(productoRequest);
             // Obtener producto existente
             Producto productoExistente = productoService.obtenerPorId(id)
-                    .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+                    .orElseThrow(() -> new NoSuchElementException("Producto no encontrado"));
             
             // Actualizar ID
             productoActualizado.setId(id);
