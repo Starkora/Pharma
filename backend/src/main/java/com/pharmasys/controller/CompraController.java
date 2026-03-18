@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/compras")
@@ -137,20 +138,20 @@ public class CompraController {
 
     private Proveedor resolveProveedor(Long proveedorId) {
         return proveedorRepository.findById(proveedorId)
-            .orElseThrow(() -> new RuntimeException("Proveedor no encontrado"));
+            .orElseThrow(() -> new NoSuchElementException("Proveedor no encontrado"));
     }
 
     private Usuario resolveUsuario(Authentication authentication, CompraRequestDto.IdReferenceDto usuarioRequest) {
         if (authentication != null && authentication.isAuthenticated()) {
             return usuarioRepository.findByUsername(authentication.getName())
-                .orElseThrow(() -> new RuntimeException("Usuario autenticado no encontrado"));
+                .orElseThrow(() -> new NoSuchElementException("Usuario autenticado no encontrado"));
         }
 
         if (usuarioRequest != null && usuarioRequest.getId() != null) {
             return usuarioRepository.findById(usuarioRequest.getId())
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new NoSuchElementException("Usuario no encontrado"));
         }
 
-        throw new RuntimeException("No se pudo determinar el usuario de la compra");
+        throw new IllegalStateException("No se pudo determinar el usuario de la compra");
     }
 }

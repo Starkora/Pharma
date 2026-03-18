@@ -33,7 +33,7 @@ public class ProveedorService {
     
     public Proveedor crear(Proveedor proveedor) {
         if (proveedor.getRuc() != null && proveedorRepository.existsByRuc(proveedor.getRuc())) {
-            throw new RuntimeException("Ya existe un proveedor con el RUC: " + proveedor.getRuc());
+            throw new IllegalArgumentException("Ya existe un proveedor con el RUC: " + proveedor.getRuc());
         }
         return proveedorRepository.save(proveedor);
     }

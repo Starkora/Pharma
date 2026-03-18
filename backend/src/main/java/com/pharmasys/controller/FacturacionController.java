@@ -37,7 +37,7 @@ public class FacturacionController {
     }
 
     @PostMapping("/emitir")
-    public ResponseEntity<?> emitir(@RequestBody EmitirComprobanteDTO dto) {
+    public ResponseEntity<Object> emitir(@RequestBody EmitirComprobanteDTO dto) {
         try {
             Comprobante comprobante = facturacionService.emitir(dto);
             return ResponseEntity.ok(comprobante);

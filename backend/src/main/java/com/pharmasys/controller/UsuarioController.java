@@ -5,7 +5,7 @@ import com.pharmasys.dto.request.UsuarioRequestDto;
 import com.pharmasys.model.Usuario;
 import com.pharmasys.service.UsuarioService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +15,10 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/usuarios")
+@RequiredArgsConstructor
 public class UsuarioController {
 
-    @Autowired
-    private UsuarioService usuarioService;
+    private final UsuarioService usuarioService;
 
     private Usuario sanitizar(Usuario u) {
         u.setPassword(null);
@@ -47,7 +47,7 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<?> crear(@Valid @RequestBody UsuarioRequestDto request) {
+    public ResponseEntity<Object> crear(@Valid @RequestBody UsuarioRequestDto request) {
         try {
             if (request.getUsername() == null || request.getUsername().isBlank()) {
                 return ResponseEntity.badRequest().body(Map.of("error", "El nombre de usuario es obligatorio"));
@@ -74,7 +74,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> actualizar(@PathVariable Long id, @Valid @RequestBody UsuarioRequestDto request) {
+    public ResponseEntity<Object> actualizar(@PathVariable Long id, @Valid @RequestBody UsuarioRequestDto request) {
         try {
             // Validar email único si cambió
             if (request.getEmail() != null) {
@@ -93,7 +93,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}/cambiar-password")
-    public ResponseEntity<?> cambiarPassword(@PathVariable Long id,
+    public ResponseEntity<Object> cambiarPassword(@PathVariable Long id,
                                              @Valid @RequestBody CambiarPasswordRequestDto request) {
         try {
             String nuevaPassword = request.getPassword();
@@ -106,7 +106,7 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Long id) {
+    public ResponseEntity<Object> eliminar(@PathVariable Long id) {
         try {
             usuarioService.eliminar(id);
             return ResponseEntity.noContent().build();

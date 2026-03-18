@@ -12,6 +12,7 @@ import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -60,7 +61,7 @@ public class VentaService {
     public Venta crear(Venta venta) {
         // Validaciones iniciales
         if (venta.getDetalles() == null || venta.getDetalles().isEmpty()) {
-            throw new RuntimeException("La venta debe tener al menos un producto");
+            throw new IllegalArgumentException("La venta debe tener al menos un producto");
         }
         
         // Generar número de venta único
@@ -75,21 +76,21 @@ public class VentaService {
         for (DetalleVenta detalle : venta.getDetalles()) {
             // Validar producto existe y está activo
             Producto producto = productoRepository.findById(detalle.getProducto().getId())
-                .orElseThrow(() -> new RuntimeException("Producto no encontrado: " + detalle.getProducto().getId()));
+                .orElseThrow(() -> new NoSuchElementException("Producto no encontrado: " + detalle.getProducto().getId()));
             
             if (!producto.getActivo()) {
-                throw new RuntimeException("El producto " + producto.getNombre() + " no está activo");
+                throw new IllegalStateException("El producto " + producto.getNombre() + " no está activo");
             }
             
             // Validar stock disponible
             if (producto.getStock() < detalle.getCantidad()) {
-                throw new RuntimeException("Stock insuficiente para " + producto.getNombre() + 
+                throw new IllegalStateException("Stock insuficiente para " + producto.getNombre() + 
                     ". Stock disponible: " + producto.getStock() + ", solicitado: " + detalle.getCantidad());
             }
             
             // Validar cantidad positiva
             if (detalle.getCantidad() <= 0) {
-                throw new RuntimeException("La cantidad debe ser mayor a cero");
+                throw new IllegalArgumentException("La cantidad debe ser mayor a cero");
             }
             
             // Establecer precio unitario del producto (precio actual)
@@ -136,16 +137,16 @@ public class VentaService {
     
     public void cancelar(Long id) {
         Venta venta = ventaRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Venta no encontrada con ID: " + id));
+            .orElseThrow(() -> new NoSuchElementException("Venta no encontrada con ID: " + id));
         
         if (venta.getEstado() == Venta.EstadoVenta.CANCELADA) {
-            throw new RuntimeException("La venta ya está cancelada");
+            throw new IllegalStateException("La venta ya está cancelada");
         }
         
         // Devolver stock a cada producto
         for (DetalleVenta detalle : venta.getDetalles()) {
             Producto producto = productoRepository.findById(detalle.getProducto().getId())
-                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+                .orElseThrow(() -> new NoSuchElementException("Producto no encontrado"));
             
             producto.setStock(producto.getStock() + detalle.getCantidad());
             productoRepository.save(producto);

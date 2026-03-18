@@ -2,7 +2,7 @@ package com.pharmasys.security;
 
 import com.pharmasys.model.Usuario;
 import com.pharmasys.repository.UsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -13,13 +13,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
     
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
     
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -34,7 +33,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (usuario.getRoles() != null && !usuario.getRoles().isEmpty()) {
             authorities = usuario.getRoles().stream()
                     .map(role -> new SimpleGrantedAuthority("ROLE_" + role.trim()))
-                    .collect(Collectors.toList());
+                    .toList();
         }
         
         return User.builder()

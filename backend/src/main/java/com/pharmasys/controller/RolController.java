@@ -22,7 +22,7 @@ public class RolController {
     }
 
     @PostMapping
-    public ResponseEntity<?> crear(@RequestBody Rol rol) {
+    public ResponseEntity<Object> crear(@RequestBody Rol rol) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(rolService.crear(rol));
         } catch (RuntimeException e) {
@@ -31,7 +31,7 @@ public class RolController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Long id) {
+    public ResponseEntity<Object> eliminar(@PathVariable Long id) {
         try {
             rolService.eliminar(id);
             return ResponseEntity.noContent().build();

@@ -24,6 +24,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/ventas")
@@ -135,20 +136,20 @@ public class VentaController {
         }
 
         return clienteRepository.findById(clienteRequest.getId())
-            .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+            .orElseThrow(() -> new NoSuchElementException("Cliente no encontrado"));
     }
 
     private Usuario resolveUsuario(Authentication authentication, VentaRequestDto.IdReferenceDto usuarioRequest) {
         if (authentication != null && authentication.isAuthenticated()) {
             return usuarioRepository.findByUsername(authentication.getName())
-                .orElseThrow(() -> new RuntimeException("Usuario autenticado no encontrado"));
+                .orElseThrow(() -> new NoSuchElementException("Usuario autenticado no encontrado"));
         }
 
         if (usuarioRequest != null && usuarioRequest.getId() != null) {
             return usuarioRepository.findById(usuarioRequest.getId())
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new NoSuchElementException("Usuario no encontrado"));
         }
 
-        throw new RuntimeException("No se pudo determinar el usuario de la venta");
+        throw new IllegalStateException("No se pudo determinar el usuario de la venta");
     }
 }

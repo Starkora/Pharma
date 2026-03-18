@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -29,7 +30,7 @@ public class CategoriaService {
     
     public Categoria crear(Categoria categoria) {
         if (categoriaRepository.existsByNombre(categoria.getNombre())) {
-            throw new RuntimeException("Ya existe una categoría con el nombre: " + categoria.getNombre());
+            throw new IllegalArgumentException("Ya existe una categoría con el nombre: " + categoria.getNombre());
         }
         return categoriaRepository.save(categoria);
     }
@@ -42,12 +43,12 @@ public class CategoriaService {
                 c.setActivo(categoria.getActivo());
                 return categoriaRepository.save(c);
             })
-            .orElseThrow(() -> new RuntimeException("Categoría no encontrada con ID: " + id));
+            .orElseThrow(() -> new NoSuchElementException("Categoría no encontrada con ID: " + id));
     }
     
     public void eliminar(Long id) {
         Categoria categoria = categoriaRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Categoría no encontrada con ID: " + id));
+            .orElseThrow(() -> new NoSuchElementException("Categoría no encontrada con ID: " + id));
         categoria.setActivo(false);
         categoriaRepository.save(categoria);
     }

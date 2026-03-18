@@ -12,8 +12,8 @@ import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +29,7 @@ public class CompraService {
     public List<CompraResponseDto> obtenerTodasResumen() {
         return compraRepository.findAllWithRelations().stream()
             .map(this::toResponseDto)
-            .collect(Collectors.toList());
+            .toList();
     }
     
     public List<Compra> obtenerTodas() {
@@ -51,7 +51,7 @@ public class CompraService {
     public List<CompraResponseDto> obtenerPorPeriodoResumen(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
         return compraRepository.findByFechaBetweenWithRelations(fechaInicio, fechaFin).stream()
             .map(this::toResponseDto)
-            .collect(Collectors.toList());
+            .toList();
     }
     
     public BigDecimal calcularTotalCompras(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
@@ -62,11 +62,11 @@ public class CompraService {
     public Compra crear(Compra compra) {
         // Validaciones iniciales
         if (compra.getDetalles() == null || compra.getDetalles().isEmpty()) {
-            throw new RuntimeException("La compra debe tener al menos un producto");
+            throw new IllegalArgumentException("La compra debe tener al menos un producto");
         }
         
         if (compra.getProveedor() == null || compra.getProveedor().getId() == null) {
-            throw new RuntimeException("Debe especificar un proveedor");
+            throw new IllegalArgumentException("Debe especificar un proveedor");
         }
         
         // Generar número de compra único
@@ -85,16 +85,16 @@ public class CompraService {
         for (DetalleCompra detalle : compra.getDetalles()) {
             // Validar producto existe
             Producto producto = productoRepository.findById(detalle.getProducto().getId())
-                .orElseThrow(() -> new RuntimeException("Producto no encontrado: " + detalle.getProducto().getId()));
+                .orElseThrow(() -> new NoSuchElementException("Producto no encontrado: " + detalle.getProducto().getId()));
             
             // Validar cantidad positiva
             if (detalle.getCantidad() <= 0) {
-                throw new RuntimeException("La cantidad debe ser mayor a cero");
+                throw new IllegalArgumentException("La cantidad debe ser mayor a cero");
             }
             
             // Validar precio positivo
             if (detalle.getPrecioUnitario().compareTo(BigDecimal.ZERO) <= 0) {
-                throw new RuntimeException("El precio unitario debe ser mayor a cero");
+                throw new IllegalArgumentException("El precio unitario debe ser mayor a cero");
             }
             
             // Calcular subtotal del detalle
@@ -133,20 +133,20 @@ public class CompraService {
     
     public Compra marcarComoRecibida(Long id) {
         Compra compra = compraRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Compra no encontrada con ID: " + id));
+            .orElseThrow(() -> new NoSuchElementException("Compra no encontrada con ID: " + id));
         
         if (compra.getEstado() == Compra.EstadoCompra.RECIBIDA) {
-            throw new RuntimeException("La compra ya está marcada como recibida");
+            throw new IllegalStateException("La compra ya está marcada como recibida");
         }
         
         if (compra.getEstado() == Compra.EstadoCompra.CANCELADA) {
-            throw new RuntimeException("No se puede recibir una compra cancelada");
+            throw new IllegalStateException("No se puede recibir una compra cancelada");
         }
         
         // Incrementar stock de todos los productos
         for (DetalleCompra detalle : compra.getDetalles()) {
             Producto producto = productoRepository.findById(detalle.getProducto().getId())
-                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+                .orElseThrow(() -> new NoSuchElementException("Producto no encontrado"));
             
             producto.setStock(producto.getStock() + detalle.getCantidad());
             producto.setPrecioCompra(detalle.getPrecioUnitario());
@@ -159,21 +159,21 @@ public class CompraService {
     
     public void cancelar(Long id) {
         Compra compra = compraRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Compra no encontrada con ID: " + id));
+            .orElseThrow(() -> new NoSuchElementException("Compra no encontrada con ID: " + id));
         
         if (compra.getEstado() == Compra.EstadoCompra.CANCELADA) {
-            throw new RuntimeException("La compra ya está cancelada");
+            throw new IllegalStateException("La compra ya está cancelada");
         }
         
         // Si estaba recibida, devolver stock (decrementar)
         if (compra.getEstado() == Compra.EstadoCompra.RECIBIDA) {
             for (DetalleCompra detalle : compra.getDetalles()) {
                 Producto producto = productoRepository.findById(detalle.getProducto().getId())
-                    .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+                    .orElseThrow(() -> new NoSuchElementException("Producto no encontrado"));
                 
                 int nuevoStock = producto.getStock() - detalle.getCantidad();
                 if (nuevoStock < 0) {
-                    throw new RuntimeException("No se puede cancelar la compra: stock insuficiente para " + 
+                    throw new IllegalStateException("No se puede cancelar la compra: stock insuficiente para " + 
                         producto.getNombre() + ". Stock actual: " + producto.getStock());
                 }
                 
@@ -218,7 +218,7 @@ public class CompraService {
                     detalle.getPrecioUnitario(),
                     detalle.getSubtotal()
                 ))
-                .collect(Collectors.toList());
+                .toList();
 
         return new CompraResponseDto(
             compra.getId(),

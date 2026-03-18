@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +23,7 @@ public class RolService {
     public Rol crear(Rol rol) {
         String nombre = rol.getNombre().trim().toUpperCase();
         if (rolRepository.existsByNombre(nombre)) {
-            throw new RuntimeException("El rol '" + nombre + "' ya existe");
+            throw new IllegalArgumentException("El rol '" + nombre + "' ya existe");
         }
         rol.setNombre(nombre);
         return rolRepository.save(rol);
@@ -30,7 +31,7 @@ public class RolService {
 
     public void eliminar(Long id) {
         if (!rolRepository.existsById(id)) {
-            throw new RuntimeException("Rol no encontrado");
+            throw new NoSuchElementException("Rol no encontrado");
         }
         rolRepository.deleteById(id);
     }

@@ -37,7 +37,7 @@ public class ClienteService {
     
     public Cliente crear(Cliente cliente) {
         if (clienteRepository.existsByDni(cliente.getDni())) {
-            throw new RuntimeException("Ya existe un cliente con el DNI: " + cliente.getDni());
+            throw new IllegalArgumentException("Ya existe un cliente con el DNI: " + cliente.getDni());
         }
         return clienteRepository.save(cliente);
     }

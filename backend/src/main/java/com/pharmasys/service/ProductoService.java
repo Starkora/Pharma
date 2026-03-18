@@ -51,7 +51,7 @@ public class ProductoService {
     
     public Producto crear(Producto producto) {
         if (productoRepository.existsByCodigo(producto.getCodigo())) {
-            throw new RuntimeException("Ya existe un producto con el código: " + producto.getCodigo());
+            throw new IllegalArgumentException("Ya existe un producto con el código: " + producto.getCodigo());
         }
         return productoRepository.save(producto);
     }

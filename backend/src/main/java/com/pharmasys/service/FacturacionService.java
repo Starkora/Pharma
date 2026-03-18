@@ -101,14 +101,14 @@ public class FacturacionService {
 
     public Comprobante emitir(EmitirComprobanteDTO dto) {
         if (dto.getVentaId() == null) {
-            throw new RuntimeException("Debe indicar la venta");
+            throw new IllegalArgumentException("Debe indicar la venta");
         }
 
         Venta venta = ventaRepository.findById(dto.getVentaId())
-                .orElseThrow(() -> new RuntimeException("Venta no encontrada: " + dto.getVentaId()));
+                .orElseThrow(() -> new NoSuchElementException("Venta no encontrada: " + dto.getVentaId()));
 
         if (venta.getEstado() != Venta.EstadoVenta.COMPLETADA) {
-            throw new RuntimeException("Solo se pueden facturar ventas COMPLETADAS");
+            throw new IllegalStateException("Solo se pueden facturar ventas COMPLETADAS");
         }
 
         validarDatosComprador(dto);
@@ -121,7 +121,7 @@ public class FacturacionService {
                     .anyMatch(c -> c.getEstado() != null && !"ERROR".equalsIgnoreCase(c.getEstado()));
 
             if (tieneNoError) {
-                throw new RuntimeException("Esta venta ya tiene un comprobante emitido");
+                throw new IllegalStateException("Esta venta ya tiene un comprobante emitido");
             }
 
             comprobanteRepository.deleteAll(comprobantesPrevios);
@@ -253,16 +253,16 @@ public class FacturacionService {
 
         if ("FACTURA".equals(tipoComprobante)) {
             if (!"6".equals(tipoDoc)) {
-                throw new RuntimeException("Para FACTURA el tipo de documento del comprador debe ser RUC (6)");
+                throw new IllegalArgumentException("Para FACTURA el tipo de documento del comprador debe ser RUC (6)");
             }
             if (!esRucValido(numDoc)) {
-                throw new RuntimeException("RUC del comprador invalido. Debe tener 11 digitos y digito verificador correcto.");
+                throw new IllegalArgumentException("RUC del comprador invalido. Debe tener 11 digitos y digito verificador correcto.");
             }
             return;
         }
 
         if ("1".equals(tipoDoc) && !esDniValido(numDoc)) {
-            throw new RuntimeException("DNI del comprador invalido. Debe tener 8 digitos.");
+            throw new IllegalArgumentException("DNI del comprador invalido. Debe tener 8 digitos.");
         }
     }
 
