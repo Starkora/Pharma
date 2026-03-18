@@ -1,0 +1,36 @@
+# Ignorar carpetas de dependencias
+node_modules/
+target/
+dist/
+out-tsc/
+
+# Ignorar archivos de configuración del IDE
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+
+# Ignorar archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Ignorar logs
+*.log
+logs/
+
+# Ignorar archivos de compilación
+*.class
+*.jar
+*.war
+
+# Ignorar configuraciones locales
+application-local.properties
+*.env
+.env.local
+
+# Ignorar configuracion sensible de Spring Boot (backend)
+backend/src/main/resources/application.properties
+
+# Mantener versionado el archivo de ejemplo
+!backend/src/main/resources/application.properties.example

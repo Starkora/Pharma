@@ -1,0 +1,74 @@
+# Configuracion del servidor
+server.port=8082
+spring.application.name=PharmaSys
+
+# Configuracion de PostgreSQL
+spring.datasource.url=jdbc:postgresql://localhost:5433/pharmasys_db?useUnicode=true&characterEncoding=UTF-8
+spring.datasource.username=postgres
+spring.datasource.password=postgres
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+# Configuracion de JPA/Hibernate
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=true
+
+# Configuracion CORS
+cors.allowed-origins=http://localhost:4200
+
+# Configuracion JWT
+# IMPORTANTE: Cambiar jwt.secret en produccion por una clave mas segura y unica
+jwt.secret=REEMPLAZAR_POR_SECRET_SEGURO
+jwt.expiration=86400000
+app.security.cookie.secure=${APP_COOKIE_SECURE:false}
+app.security.cookie.same-site=${APP_COOKIE_SAMESITE:Lax}
+
+# Configuracion de logging
+logging.level.com.pharmasys=DEBUG
+logging.level.org.springframework.web=INFO
+logging.level.org.hibernate.SQL=DEBUG
+
+# =====================================================
+# Facturacion Electronica (Nubefact)
+# =====================================================
+facturacion.proveedor=${FACTURACION_PROVEEDOR:nubefact}
+nubefact.url=${NUBEFACT_URL:https://api.nubefact.com/api/v1/REEMPLAZAR_RUTA}
+nubefact.token=${NUBEFACT_TOKEN:REEMPLAZAR_TOKEN}
+nubefact.authorization-scheme=${NUBEFACT_AUTH_SCHEME:Token}
+nubefact.serie.factura=${NUBEFACT_SERIE_FACTURA:FFF1}
+nubefact.serie.boleta=${NUBEFACT_SERIE_BOLETA:BBB1}
+
+# Fallback APISUNAT (si cambias FACTURACION_PROVEEDOR=apisunat)
+apisunat.token=${APISUNAT_TOKEN:}
+apisunat.base-url=${APISUNAT_BASE_URL:https://sandbox.apisunat.pe}
+apisunat.endpoint.factura=${APISUNAT_ENDPOINT_FACTURA:/api/v3/documents}
+apisunat.endpoint.boleta=${APISUNAT_ENDPOINT_BOLETA:/api/v3/documents}
+apisunat.endpoint.factura.candidates=${APISUNAT_ENDPOINT_FACTURA_CANDIDATES:/api/v3/documents,/v3/documents,/api/v1/persona/facturas,/v1/persona/facturas}
+apisunat.endpoint.boleta.candidates=${APISUNAT_ENDPOINT_BOLETA_CANDIDATES:/api/v3/documents,/v3/documents,/api/v1/persona/boletas,/v1/persona/boletas}
+apisunat.ruc=REEMPLAZAR_RUC
+apisunat.razon-social=REEMPLAZAR_RAZON_SOCIAL
+apisunat.direccion=REEMPLAZAR_DIRECCION
+apisunat.ubigeo=150101
+apisunat.serie-boleta=B001
+apisunat.serie-factura=F001
+
+# =====================================================
+# Azure Blob Storage (Imagenes de productos)
+# =====================================================
+# Configura el connection string en variable de entorno para no exponer secretos.
+azure.storage.connection-string=${AZURE_STORAGE_CONNECTION_STRING:}
+azure.storage.container-name=${AZURE_STORAGE_CONTAINER_NAME:products}
+azure.storage.sas-expiry-minutes=${AZURE_STORAGE_SAS_EXPIRY_MINUTES:240}
+
+# =====================================================
+# Bot WhatsApp (Asuna) - Notificaciones ERP
+# =====================================================
+whatsapp.bot.enabled=${WHATSAPP_BOT_ENABLED:true}
+whatsapp.bot.base-url=${WHATSAPP_BOT_BASE_URL:http://localhost:8000}
+whatsapp.bot.api-key=${WHATSAPP_BOT_API_KEY:REEMPLAZAR_API_KEY}
+whatsapp.bot.use-template=${WHATSAPP_BOT_USE_TEMPLATE:true}
+whatsapp.bot.template.name=${WHATSAPP_BOT_TEMPLATE_NAME:venta_confirmada}
+whatsapp.bot.template.language=${WHATSAPP_BOT_TEMPLATE_LANGUAGE:es_PE}
+whatsapp.bot.app-id=${WHATSAPP_BOT_APP_ID:farmacia}
