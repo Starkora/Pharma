@@ -55,11 +55,6 @@ import Swal from 'sweetalert2';
             {{ loading ? 'Iniciando sesión...' : 'Iniciar Sesión' }}
           </button>
         </form>
-        
-        <div class="login-footer">
-          <p>Usuario por defecto: <strong>admin</strong></p>
-          <p>Contraseña: <strong>admin123</strong></p>
-        </div>
       </div>
     </div>
   `,
