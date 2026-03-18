@@ -6,7 +6,7 @@ import com.pharmasys.security.JwtUtil;
 import com.pharmasys.service.UsuarioService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -23,18 +23,14 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
     private static final String AUTH_COOKIE_NAME = "authToken";
-    
-    @Autowired
-    private UsuarioService usuarioService;
-    
-    @Autowired
-    private JwtUtil jwtUtil;
-    
-    @Autowired
-    private AuthenticationManager authenticationManager;
+
+    private final UsuarioService usuarioService;
+    private final JwtUtil jwtUtil;
+    private final AuthenticationManager authenticationManager;
 
     @Value("${app.security.cookie.secure:false}")
     private boolean secureCookie;
