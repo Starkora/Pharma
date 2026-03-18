@@ -186,10 +186,10 @@ export class VentasComponent implements OnInit {
   cantidadTemp = 1;
 
   constructor(
-    private ventaService: VentaService,
-    private productoService: ProductoService,
-    private clienteService: ClienteService,
-    private cdr: ChangeDetectorRef
+    private readonly ventaService: VentaService,
+    private readonly productoService: ProductoService,
+    private readonly clienteService: ClienteService,
+    private readonly cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -291,8 +291,8 @@ export class VentasComponent implements OnInit {
       return;
     }
 
-    this.ventaService.crear(this.ventaActual).subscribe(
-      () => {
+    this.ventaService.crear(this.ventaActual).subscribe({
+      next: () => {
         Swal.fire({
           icon: 'success',
           title: 'Venta procesada',
@@ -304,7 +304,7 @@ export class VentasComponent implements OnInit {
         this.cargarProductos();
         this.cancelar();
       },
-      (error) => {
+      error: (error) => {
         AppLogger.error('Error al procesar venta');
         Swal.fire({
           icon: 'error',
@@ -312,7 +312,7 @@ export class VentasComponent implements OnInit {
           text: error?.error?.message || 'No se pudo procesar la venta'
         });
       }
-    );
+    });
   }
 
   cancelarVenta(id: number): void {
@@ -327,8 +327,8 @@ export class VentasComponent implements OnInit {
       cancelButtonText: 'No cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.ventaService.cancelar(id).subscribe(
-          () => {
+        this.ventaService.cancelar(id).subscribe({
+          next: () => {
             Swal.fire({
               icon: 'success',
               title: 'Venta cancelada',
@@ -339,7 +339,7 @@ export class VentasComponent implements OnInit {
             this.cargarVentas();
             this.cargarProductos();
           },
-          () => {
+          error: () => {
             AppLogger.error('Error al cancelar venta');
             Swal.fire({
               icon: 'error',
@@ -347,7 +347,7 @@ export class VentasComponent implements OnInit {
               text: 'No se pudo cancelar la venta'
             });
           }
-        );
+        });
       }
     });
   }

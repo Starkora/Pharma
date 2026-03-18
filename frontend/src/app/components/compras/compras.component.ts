@@ -223,10 +223,10 @@ export class ComprasComponent implements OnInit {
   precioTemp = 0;
 
   constructor(
-    private compraService: CompraService,
-    private proveedorService: ProveedorService,
-    private productoService: ProductoService,
-    private cdr: ChangeDetectorRef
+    private readonly compraService: CompraService,
+    private readonly proveedorService: ProveedorService,
+    private readonly productoService: ProductoService,
+    private readonly cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {

@@ -33,7 +33,7 @@ public class CompraController {
     private final CompraService compraService;
     private final ProveedorRepository proveedorRepository;
     private final UsuarioRepository usuarioRepository;
-    
+    private static final String JSON_FIELD_MESSAGE = "message";
     @GetMapping
     public ResponseEntity<List<CompraResponseDto>> obtenerTodas() {
         return ResponseEntity.ok(compraService.obtenerTodasResumen());
@@ -74,7 +74,7 @@ public class CompraController {
             String message = e.getMessage() != null && !e.getMessage().isBlank()
                 ? e.getMessage()
                 : "No se pudo procesar la compra";
-            return ResponseEntity.badRequest().body(Map.of("error", message, "message", message));
+            return ResponseEntity.badRequest().body(Map.of("error", message, JSON_FIELD_MESSAGE, message));
         }
     }
     
@@ -94,7 +94,7 @@ public class CompraController {
             compraService.marcarComoRecibida(id);
             return ResponseEntity.ok(Map.of(
                 "success", true,
-                "message", "Compra marcada como recibida"
+                JSON_FIELD_MESSAGE, "Compra marcada como recibida"
             ));
         } catch (RuntimeException e) {
             String message = e.getMessage() != null && !e.getMessage().isBlank()
@@ -102,7 +102,7 @@ public class CompraController {
                 : "No se pudo marcar la compra como recibida";
             return ResponseEntity.badRequest().body(Map.of(
                 "success", false,
-                "message", message,
+                JSON_FIELD_MESSAGE, message,
                 "error", message
             ));
         }

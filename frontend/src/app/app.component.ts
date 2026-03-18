@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from './services/auth.service';
@@ -92,28 +92,27 @@ import { Usuario } from './models/auth.model';
     }
   `]
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'PharmaSys';
   currentUser: Usuario | null = null;
 
   constructor(
     public authService: AuthService,
-    private router: Router
+    private readonly router: Router
   ) {
     this.authService.currentUser.subscribe(user => {
       this.currentUser = user;
     });
   }
 
-  ngOnInit(): void {
-    // Evita un request de validación al arrancar que solo genera ruido si la
-    // cookie ya expiró. La sesión se limpia por interceptor ante 401/403.
-  }
-
   logout(): void {
     this.authService.logout().subscribe({
-      next: () => this.router.navigate(['/login']),
-      error: () => this.router.navigate(['/login'])
+      next: () => {
+        void this.router.navigate(['/login']);
+      },
+      error: () => {
+        void this.router.navigate(['/login']);
+      }
     });
   }
 }

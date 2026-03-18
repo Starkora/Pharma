@@ -25,9 +25,9 @@ interface VentaRequestPayload {
   providedIn: 'root'
 })
 export class VentaService {
-  private apiUrl = `${environment.apiUrl}/ventas`;
+  private readonly apiUrl = `${environment.apiUrl}/ventas`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
   obtenerTodas(): Observable<Venta[]> {
     return this.http.get<Venta[]>(this.apiUrl, { withCredentials: true });

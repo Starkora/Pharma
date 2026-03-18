@@ -16,6 +16,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional
 public class ProductoService {
+
+    private static final String PRODUCTO_NO_ENCONTRADO_CON_ID = "Producto no encontrado con ID: ";
     
     private final ProductoRepository productoRepository;
     private final CategoriaRepository categoriaRepository;
@@ -76,7 +78,7 @@ public class ProductoService {
                 p.setActivo(producto.getActivo());
                 return productoRepository.save(p);
             })
-            .orElseThrow(() -> new RuntimeException("Producto no encontrado con ID: " + id));
+            .orElseThrow(() -> new RuntimeException(PRODUCTO_NO_ENCONTRADO_CON_ID + id));
     }
 
     private Categoria resolverCategoria(Categoria categoria) {
@@ -95,14 +97,14 @@ public class ProductoService {
     
     public void eliminar(Long id) {
         Producto producto = productoRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Producto no encontrado con ID: " + id));
+            .orElseThrow(() -> new RuntimeException(PRODUCTO_NO_ENCONTRADO_CON_ID + id));
         producto.setActivo(false);
         productoRepository.save(producto);
     }
     
     public void actualizarStock(Long id, Integer cantidad) {
         Producto producto = productoRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Producto no encontrado con ID: " + id));
+            .orElseThrow(() -> new RuntimeException(PRODUCTO_NO_ENCONTRADO_CON_ID + id));
         producto.setStock(producto.getStock() + cantidad);
         productoRepository.save(producto);
     }

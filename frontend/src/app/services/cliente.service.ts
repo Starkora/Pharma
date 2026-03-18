@@ -8,9 +8,9 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class ClienteService {
-  private apiUrl = `${environment.apiUrl}/clientes`;
+  private readonly apiUrl = `${environment.apiUrl}/clientes`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
   obtenerTodos(): Observable<Cliente[]> {
     return this.http.get<Cliente[]>(this.apiUrl, { withCredentials: true });

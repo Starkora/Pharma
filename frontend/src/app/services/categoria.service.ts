@@ -8,9 +8,9 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class CategoriaService {
-  private apiUrl = `${environment.apiUrl}/categorias`;
+  private readonly apiUrl = `${environment.apiUrl}/categorias`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
   obtenerTodas(): Observable<Categoria[]> {
     return this.http.get<Categoria[]>(this.apiUrl, { withCredentials: true });

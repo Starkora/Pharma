@@ -87,7 +87,7 @@ public class UsuarioService {
     
     public boolean validarCredenciales(String username, String password) {
         Optional<Usuario> usuario = usuarioRepository.findByUsername(username);
-        if (usuario.isPresent() && usuario.get().getActivo()) {
+        if (usuario.isPresent() && Boolean.TRUE.equals(usuario.get().getActivo())) {
             return passwordEncoder.matches(password, usuario.get().getPassword());
         }
         return false;

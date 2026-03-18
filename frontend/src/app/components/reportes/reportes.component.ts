@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { VentaService } from '../../services/venta.service';
@@ -269,7 +269,7 @@ interface ProductoVendido {
     .row-danger { background-color: #fff5f5; }
   `]
 })
-export class ReportesComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ReportesComponent implements OnInit, OnDestroy {
 
   @ViewChild('ventasChart') ventasChartRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('productosChart') productosChartRef!: ElementRef<HTMLCanvasElement>;
@@ -277,6 +277,10 @@ export class ReportesComponent implements OnInit, AfterViewInit, OnDestroy {
   private chartVentas: Chart | null = null;
   private chartProductos: Chart | null = null;
   private cargaId = 0;
+  private readonly ventaService: VentaService;
+  private readonly compraService: CompraService;
+  private readonly productoService: ProductoService;
+  private readonly cdr: ChangeDetectorRef;
 
   meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
   anios: number[] = [];
@@ -295,11 +299,16 @@ export class ReportesComponent implements OnInit, AfterViewInit, OnDestroy {
   utilidad = 0;
 
   constructor(
-    private ventaService: VentaService,
-    private compraService: CompraService,
-    private productoService: ProductoService,
-    private cdr: ChangeDetectorRef
+    ventaService: VentaService,
+    compraService: CompraService,
+    productoService: ProductoService,
+    cdr: ChangeDetectorRef
   ) {
+    this.ventaService = ventaService;
+    this.compraService = compraService;
+    this.productoService = productoService;
+    this.cdr = cdr;
+
     const hoy = new Date();
     this.mesSeleccionado = hoy.getMonth() + 1;
     this.anioSeleccionado = hoy.getFullYear();
@@ -310,10 +319,6 @@ export class ReportesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.cargarDatos();
-  }
-
-  ngAfterViewInit(): void {
-    // Los gráficos se crean en cargarDatos() después de obtener los datos
   }
 
   ngOnDestroy(): void {
@@ -480,7 +485,7 @@ export class ReportesComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // Agrupar ventas por día del mes
     const diasEnMes = new Date(this.anioSeleccionado, this.mesSeleccionado, 0).getDate();
-    const totalesPorDia = Array(diasEnMes).fill(0);
+    const totalesPorDia = new Array(diasEnMes).fill(0);
 
     this.ventasMes
       .filter(v => v.estado === 'COMPLETADA')

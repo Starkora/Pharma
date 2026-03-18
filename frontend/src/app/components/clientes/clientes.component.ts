@@ -131,8 +131,8 @@ export class ClientesComponent implements OnInit {
   terminoBusqueda = '';
 
   constructor(
-    private clienteService: ClienteService,
-    private cdr: ChangeDetectorRef
+    private readonly clienteService: ClienteService,
+    private readonly cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {

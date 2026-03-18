@@ -8,9 +8,9 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class CompraService {
-  private apiUrl = `${environment.apiUrl}/compras`;
+  private readonly apiUrl = `${environment.apiUrl}/compras`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
   obtenerTodas(): Observable<Compra[]> {
     return this.http.get<Compra[]>(this.apiUrl, { withCredentials: true });

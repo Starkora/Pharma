@@ -145,8 +145,8 @@ export class ProveedoresComponent implements OnInit {
   mostrandoFormulario = false;
 
   constructor(
-    private proveedorService: ProveedorService,
-    private cdr: ChangeDetectorRef
+    private readonly proveedorService: ProveedorService,
+    private readonly cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {

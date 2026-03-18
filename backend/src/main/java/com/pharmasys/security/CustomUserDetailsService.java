@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,16 +24,15 @@ public class CustomUserDetailsService implements UserDetailsService {
         Usuario usuario = usuarioRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + username));
         
-        if (!usuario.getActivo()) {
+        if (Boolean.FALSE.equals(usuario.getActivo())) {
             throw new UsernameNotFoundException("Usuario inactivo: " + username);
         }
         
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        if (usuario.getRoles() != null && !usuario.getRoles().isEmpty()) {
-            authorities = usuario.getRoles().stream()
-                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role.trim()))
-                    .toList();
-        }
+        List<GrantedAuthority> authorities = (usuario.getRoles() == null || usuario.getRoles().isEmpty())
+            ? List.of()
+            : usuario.getRoles().stream()
+                .map(role -> (GrantedAuthority) new SimpleGrantedAuthority("ROLE_" + role.trim()))
+                .toList();
         
         return User.builder()
                 .username(usuario.getUsername())

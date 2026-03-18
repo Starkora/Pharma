@@ -198,10 +198,10 @@ export class ProductosComponent implements OnInit {
   imagenPreview: string | null = null;
 
   constructor(
-    private productoService: ProductoService,
-    private categoriaService: CategoriaService,
-    private proveedorService: ProveedorService,
-    private cdr: ChangeDetectorRef
+    private readonly productoService: ProductoService,
+    private readonly categoriaService: CategoriaService,
+    private readonly proveedorService: ProveedorService,
+    private readonly cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -290,41 +290,40 @@ export class ProductosComponent implements OnInit {
           error: () => AppLogger.error('Error al actualizar producto')
         });
       }
+    } else if (this.imagenSeleccionada) {
+      // Crear nuevo con imagen
+      this.productoService.crearConImagen(this.productoSeleccionado, this.imagenSeleccionada).subscribe({
+        next: () => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Producto creado',
+            text: 'El producto se creó correctamente',
+            timer: 2000,
+            showConfirmButton: false
+          });
+          this.cargarProductos();
+          this.cdr.detectChanges();
+          this.cancelar();
+        },
+        error: () => AppLogger.error('Error al crear producto')
+      });
     } else {
-      // Crear nuevo
-      if (this.imagenSeleccionada) {
-        this.productoService.crearConImagen(this.productoSeleccionado, this.imagenSeleccionada).subscribe({
-          next: () => {
-            Swal.fire({
-              icon: 'success',
-              title: 'Producto creado',
-              text: 'El producto se creó correctamente',
-              timer: 2000,
-              showConfirmButton: false
-            });
-            this.cargarProductos();
-            this.cdr.detectChanges();
-            this.cancelar();
-          },
-          error: () => AppLogger.error('Error al crear producto')
-        });
-      } else {
-        this.productoService.crear(this.productoSeleccionado).subscribe({
-          next: () => {
-            Swal.fire({
-              icon: 'success',
-              title: 'Producto creado',
-              text: 'El producto se creó correctamente',
-              timer: 2000,
-              showConfirmButton: false
-            });
-            this.cargarProductos();
-            this.cdr.detectChanges();
-            this.cancelar();
-          },
-          error: () => AppLogger.error('Error al crear producto')
-        });
-      }
+      // Crear nuevo sin imagen
+      this.productoService.crear(this.productoSeleccionado).subscribe({
+        next: () => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Producto creado',
+            text: 'El producto se creó correctamente',
+            timer: 2000,
+            showConfirmButton: false
+          });
+          this.cargarProductos();
+          this.cdr.detectChanges();
+          this.cancelar();
+        },
+        error: () => AppLogger.error('Error al crear producto')
+      });
     }
   }
 

@@ -19,7 +19,7 @@ import java.util.Map;
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
-
+    private static final String JSON_FIELD_ERROR = "error";
     private Usuario sanitizar(Usuario u) {
         u.setPassword(null);
         return u;
@@ -50,26 +50,26 @@ public class UsuarioController {
     public ResponseEntity<Object> crear(@Valid @RequestBody UsuarioRequestDto request) {
         try {
             if (request.getUsername() == null || request.getUsername().isBlank()) {
-                return ResponseEntity.badRequest().body(Map.of("error", "El nombre de usuario es obligatorio"));
+                return ResponseEntity.badRequest().body(Map.of(JSON_FIELD_ERROR, "El nombre de usuario es obligatorio"));
             }
             if (request.getPassword() == null || request.getPassword().isBlank()) {
-                return ResponseEntity.badRequest().body(Map.of("error", "La contraseña es obligatoria"));
+                return ResponseEntity.badRequest().body(Map.of(JSON_FIELD_ERROR, "La contraseña es obligatoria"));
             }
 
             // Validar username y email únicos
             if (usuarioService.existsByUsername(request.getUsername())) {
                 return ResponseEntity.badRequest()
-                        .body(Map.of("error", "El nombre de usuario ya está en uso"));
+                        .body(Map.of(JSON_FIELD_ERROR, "El nombre de usuario ya está en uso"));
             }
             if (request.getEmail() != null && usuarioService.existsByEmail(request.getEmail())) {
                 return ResponseEntity.badRequest()
-                        .body(Map.of("error", "El correo electrónico ya está registrado"));
+                        .body(Map.of(JSON_FIELD_ERROR, "El correo electrónico ya está registrado"));
             }
             Usuario nuevo = usuarioService.crear(toEntity(request));
             return ResponseEntity.status(HttpStatus.CREATED).body(sanitizar(nuevo));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(Map.of("error", "No se pudo crear el usuario"));
+                    .body(Map.of(JSON_FIELD_ERROR, "No se pudo crear el usuario"));
         }
     }
 
@@ -81,14 +81,14 @@ public class UsuarioController {
                 var existe = usuarioService.buscarPorEmail(request.getEmail());
                 if (existe.isPresent() && !existe.get().getId().equals(id)) {
                     return ResponseEntity.badRequest()
-                            .body(Map.of("error", "El correo electrónico ya está en uso"));
+                            .body(Map.of(JSON_FIELD_ERROR, "El correo electrónico ya está en uso"));
                 }
             }
             Usuario actualizado = usuarioService.actualizar(id, toEntity(request));
             return ResponseEntity.ok(sanitizar(actualizado));
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(Map.of("error", "No se pudo actualizar el usuario"));
+                    .body(Map.of(JSON_FIELD_ERROR, "No se pudo actualizar el usuario"));
         }
     }
 
@@ -101,7 +101,7 @@ public class UsuarioController {
             return ResponseEntity.ok(Map.of("message", "Contraseña actualizada"));
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(Map.of("error", "No se pudo actualizar la contraseña"));
+                    .body(Map.of(JSON_FIELD_ERROR, "No se pudo actualizar la contraseña"));
         }
     }
 
@@ -112,7 +112,7 @@ public class UsuarioController {
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(Map.of("error", "No se pudo eliminar el usuario"));
+                    .body(Map.of(JSON_FIELD_ERROR, "No se pudo eliminar el usuario"));
         }
     }
 

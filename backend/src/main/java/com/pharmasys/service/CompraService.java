@@ -206,18 +206,23 @@ public class CompraService {
         List<CompraResponseDto.DetalleCompraResponseDto> detallesDto = compra.getDetalles() == null
             ? List.of()
             : compra.getDetalles().stream()
-                .map(detalle -> new CompraResponseDto.DetalleCompraResponseDto(
-                    detalle.getId(),
-                    detalle.getProducto() == null
-                        ? null
-                        : new CompraResponseDto.ProductoResponseDto(
+                .map(detalle -> {
+                    CompraResponseDto.ProductoResponseDto productoDto = null;
+                    if (detalle.getProducto() != null) {
+                        productoDto = new CompraResponseDto.ProductoResponseDto(
                             detalle.getProducto().getId(),
                             detalle.getProducto().getNombre()
-                        ),
-                    detalle.getCantidad(),
-                    detalle.getPrecioUnitario(),
-                    detalle.getSubtotal()
-                ))
+                        );
+                    }
+
+                    return new CompraResponseDto.DetalleCompraResponseDto(
+                        detalle.getId(),
+                        productoDto,
+                        detalle.getCantidad(),
+                        detalle.getPrecioUnitario(),
+                        detalle.getSubtotal()
+                    );
+                })
                 .toList();
 
         return new CompraResponseDto(

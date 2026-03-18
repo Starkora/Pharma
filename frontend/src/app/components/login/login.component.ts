@@ -157,9 +157,9 @@ export class LoginComponent implements OnInit {
   returnUrl = '/';
 
   constructor(
-    private authService: AuthService,
-    private router: Router,
-    private route: ActivatedRoute
+    private readonly authService: AuthService,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute
   ) {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }

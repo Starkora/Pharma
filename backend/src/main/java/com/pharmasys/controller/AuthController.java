@@ -28,7 +28,8 @@ import java.util.NoSuchElementException;
 public class AuthController {
 
     private static final String AUTH_COOKIE_NAME = "authToken";
-
+    private static final String JSON_FIELD_SUCCESS = "success";
+    private static final String JSON_FIELD_MESSAGE = "message";
     private final UsuarioService usuarioService;
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
@@ -61,21 +62,21 @@ public class AuthController {
             
             // Crear respuesta
             Map<String, Object> responseBody = new HashMap<>();
-            responseBody.put("success", true);
-            responseBody.put("message", "Login exitoso");
+            responseBody.put(JSON_FIELD_SUCCESS, true);
+            responseBody.put(JSON_FIELD_MESSAGE, "Login exitoso");
             responseBody.put("usuario", crearUsuarioResponse(usuario));
             
             return ResponseEntity.ok(responseBody);
             
         } catch (BadCredentialsException e) {
             Map<String, Object> responseBody = new HashMap<>();
-            responseBody.put("success", false);
-            responseBody.put("message", "Credenciales inválidas");
+            responseBody.put(JSON_FIELD_SUCCESS, false);
+            responseBody.put(JSON_FIELD_MESSAGE, "Credenciales inválidas");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
         } catch (Exception e) {
             Map<String, Object> responseBody = new HashMap<>();
-            responseBody.put("success", false);
-            responseBody.put("message", "No se pudo completar el login");
+            responseBody.put(JSON_FIELD_SUCCESS, false);
+            responseBody.put(JSON_FIELD_MESSAGE, "No se pudo completar el login");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseBody);
         }
     }
@@ -85,8 +86,8 @@ public class AuthController {
         response.addHeader(HttpHeaders.SET_COOKIE, clearAuthCookie().toString());
         
         Map<String, Object> responseBody = new HashMap<>();
-        responseBody.put("success", true);
-        responseBody.put("message", "Sesión cerrada exitosamente");
+        responseBody.put(JSON_FIELD_SUCCESS, true);
+        responseBody.put(JSON_FIELD_MESSAGE, "Sesión cerrada exitosamente");
         
         return ResponseEntity.ok(responseBody);
     }
@@ -97,8 +98,8 @@ public class AuthController {
             response.addHeader(HttpHeaders.SET_COOKIE, clearAuthCookie().toString());
 
             Map<String, Object> responseBody = new HashMap<>();
-            responseBody.put("success", false);
-            responseBody.put("message", "Sesión no válida");
+            responseBody.put(JSON_FIELD_SUCCESS, false);
+            responseBody.put(JSON_FIELD_MESSAGE, "Sesión no válida");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
         }
 
@@ -110,13 +111,13 @@ public class AuthController {
                 response.addHeader(HttpHeaders.SET_COOKIE, clearAuthCookie().toString());
 
                 Map<String, Object> responseBody = new HashMap<>();
-                responseBody.put("success", false);
-                responseBody.put("message", "Usuario inactivo");
+                responseBody.put(JSON_FIELD_SUCCESS, false);
+                responseBody.put(JSON_FIELD_MESSAGE, "Usuario inactivo");
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(responseBody);
             }
 
             Map<String, Object> responseBody = new HashMap<>();
-            responseBody.put("success", true);
+            responseBody.put(JSON_FIELD_SUCCESS, true);
             responseBody.put("usuario", crearUsuarioResponse(usuario));
 
             return ResponseEntity.ok(responseBody);
@@ -124,8 +125,8 @@ public class AuthController {
             response.addHeader(HttpHeaders.SET_COOKIE, clearAuthCookie().toString());
 
             Map<String, Object> responseBody = new HashMap<>();
-            responseBody.put("success", false);
-            responseBody.put("message", "Sesión no válida");
+            responseBody.put(JSON_FIELD_SUCCESS, false);
+            responseBody.put(JSON_FIELD_MESSAGE, "Sesión no válida");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
         }
     }
