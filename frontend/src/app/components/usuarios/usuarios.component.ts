@@ -300,10 +300,10 @@ export class UsuariosComponent implements OnInit {
   ];
 
   constructor(
-    private usuarioService: UsuarioService,
-    private rolService: RolService,
-    private authService: AuthService,
-    private cdr: ChangeDetectorRef
+    private readonly usuarioService: UsuarioService,
+    private readonly rolService: RolService,
+    private readonly authService: AuthService,
+    private readonly cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -443,11 +443,8 @@ export class UsuariosComponent implements OnInit {
   guardar(): void {
     const payload: Usuario = { ...this.usuarioSeleccionado };
 
-    if (!this.usuarioSeleccionado.id) {
-      // Nuevo usuario: incluir password
-      payload.password = this.nuevoPassword;
-    } else if (this.nuevoPassword) {
-      // Editar: password solo si se llenó
+    if (!this.usuarioSeleccionado.id || this.nuevoPassword) {
+      // Nuevo usuario o edición con contraseña ingresada
       payload.password = this.nuevoPassword;
     }
 
@@ -524,7 +521,7 @@ export class UsuariosComponent implements OnInit {
   colorRol(rol: string): string {
     let hash = 0;
     for (let i = 0; i < rol.length; i++) {
-      hash = rol.charCodeAt(i) + ((hash << 5) - hash);
+      hash = (rol.codePointAt(i) ?? 0) + ((hash << 5) - hash);
     }
     return this.PALETA[Math.abs(hash) % this.PALETA.length];
   }

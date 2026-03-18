@@ -271,9 +271,9 @@ export class FacturacionComponent implements OnInit {
   dto: EmitirComprobanteDTO = this.dtoVacio();
 
   constructor(
-    private facturacionService: FacturacionService,
-    private ventaService: VentaService,
-    private cdr: ChangeDetectorRef
+    private readonly facturacionService: FacturacionService,
+    private readonly ventaService: VentaService,
+    private readonly cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {

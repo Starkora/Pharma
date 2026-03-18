@@ -1,0 +1,48 @@
+generatedAt: "2026-03-18T22:10:23.418Z"
+rule: S7924
+count: 4
+details:
+  code: "css:S7924"
+  source: SonarLintScanner
+  path: "c:\\Users\\nabes\\source\\repos\\PharmaSys"
+occurrences[4]:
+  - key: "frontend/src/styles.css:80:0:4"
+    file: frontend/src/styles.css
+    line: 81
+    textRange:
+      startLine: 81
+      endLine: 81
+      startOffset: 0
+      endOffset: 16
+    message: Text does not meet the minimal contrast requirement with its background.
+    severity: MAJOR
+  - key: "frontend/src/styles.css:89:0:5"
+    file: frontend/src/styles.css
+    line: 90
+    textRange:
+      startLine: 90
+      endLine: 90
+      startOffset: 0
+      endOffset: 16
+    message: Text does not meet the minimal contrast requirement with its background.
+    severity: MAJOR
+  - key: "frontend/src/styles.css:98:0:6"
+    file: frontend/src/styles.css
+    line: 99
+    textRange:
+      startLine: 99
+      endLine: 99
+      startOffset: 0
+      endOffset: 16
+    message: Text does not meet the minimal contrast requirement with its background.
+    severity: MAJOR
+  - key: "frontend/src/styles.css:107:0:7"
+    file: frontend/src/styles.css
+    line: 108
+    textRange:
+      startLine: 108
+      endLine: 108
+      startOffset: 0
+      endOffset: 16
+    message: Text does not meet the minimal contrast requirement with its background.
+    severity: MAJOR

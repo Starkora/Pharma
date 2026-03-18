@@ -1,0 +1,38 @@
+generatedAt: "2026-03-18T22:10:23.418Z"
+rule: S6353
+count: 3
+details:
+  code: "java:S6353"
+  source: SonarLintScanner
+  path: "c:\\Users\\nabes\\source\\repos\\PharmaSys"
+occurrences[3]:
+  - key: "backend/src/main/java/com/pharmasys/dto/request/ClienteRequestDto.java:22:27:13"
+    file: backend/src/main/java/com/pharmasys/dto/request/ClienteRequestDto.java
+    line: 23
+    textRange:
+      startLine: 23
+      endLine: 23
+      startOffset: 27
+      endOffset: 32
+    message: "Use concise character class syntax '\\\\d' instead of '[0-9]'."
+    severity: MAJOR
+  - key: "backend/src/main/java/com/pharmasys/dto/request/ProveedorRequestDto.java:16:27:14"
+    file: backend/src/main/java/com/pharmasys/dto/request/ProveedorRequestDto.java
+    line: 17
+    textRange:
+      startLine: 17
+      endLine: 17
+      startOffset: 27
+      endOffset: 32
+    message: "Use concise character class syntax '\\\\d' instead of '[0-9]'."
+    severity: MAJOR
+  - key: "backend/src/main/java/com/pharmasys/service/WhatsAppNotificationService.java:145:36:11"
+    file: backend/src/main/java/com/pharmasys/service/WhatsAppNotificationService.java
+    line: 146
+    textRange:
+      startLine: 146
+      endLine: 146
+      startOffset: 36
+      endOffset: 42
+    message: "Use concise character class syntax '\\\\D' instead of '[^0-9]'."
+    severity: MAJOR

@@ -1,0 +1,73 @@
+generatedAt: "2026-03-18T22:10:23.418Z"
+totalIssues: 38
+groups:
+  misc:
+    count: 6
+    file: ""
+    textFile: ""
+    toonFile: info/misc.toon
+  S1871:
+    count: 1
+    file: ""
+    textFile: ""
+    toonFile: major/S1871.toon
+  S2301:
+    count: 1
+    file: ""
+    textFile: ""
+    toonFile: major/S2301.toon
+  S2933:
+    count: 13
+    file: ""
+    textFile: ""
+    toonFile: major/S2933.toon
+  S3776:
+    count: 1
+    file: ""
+    textFile: ""
+    toonFile: major/S3776.toon
+  S5411:
+    count: 1
+    file: ""
+    textFile: ""
+    toonFile: major/S5411.toon
+  S6338:
+    count: 2
+    file: ""
+    textFile: ""
+    toonFile: major/S6338.toon
+  S6353:
+    count: 3
+    file: ""
+    textFile: ""
+    toonFile: major/S6353.toon
+  S6437:
+    count: 1
+    file: ""
+    textFile: ""
+    toonFile: major/S6437.toon
+  S6544:
+    count: 1
+    file: ""
+    textFile: ""
+    toonFile: major/S6544.toon
+  S7758:
+    count: 1
+    file: ""
+    textFile: ""
+    toonFile: major/S7758.toon
+  S7773:
+    count: 2
+    file: ""
+    textFile: ""
+    toonFile: major/S7773.toon
+  S7781:
+    count: 1
+    file: ""
+    textFile: ""
+    toonFile: major/S7781.toon
+  S7924:
+    count: 4
+    file: ""
+    textFile: ""
+    toonFile: major/S7924.toon

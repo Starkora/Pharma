@@ -1,0 +1,70 @@
+generatedAt: "2026-03-18T22:10:23.418Z"
+rule: misc
+count: 6
+details:
+  code: "6133"
+  source: ts
+  path: "c:\\Users\\nabes\\source\\repos\\PharmaSys"
+occurrences[6]:
+  - key: "backend/pom.xml:0:0:9"
+    file: backend/pom.xml
+    line: 1
+    textRange:
+      startLine: 1
+      endLine: 1
+      startOffset: 0
+      endOffset: 0
+    message: "Project configuration is not up-to-date with pom.xml, requires an update."
+    severity: MAJOR
+    source: Java
+  - key: "backend/pom.xml:0:0:8"
+    file: backend/pom.xml
+    line: 1
+    textRange:
+      startLine: 1
+      endLine: 1
+      startOffset: 0
+      endOffset: 0
+    message: The build file has been changed and may need reload to make it effective.
+    severity: MINOR
+    source: Java
+  - key: "frontend/karma.conf.js:3:17:3"
+    file: frontend/karma.conf.js
+    line: 4
+    textRange:
+      startLine: 4
+      endLine: 4
+      startOffset: 17
+      endOffset: 37
+    message: El archivo es un módulo CommonJS; se puede convertir en un módulo ES.
+    severity: INFO
+  - key: "frontend/src/app/components/clientes/clientes.component.ts:230:18:1"
+    file: frontend/src/app/components/clientes/clientes.component.ts
+    line: 231
+    textRange:
+      startLine: 231
+      endLine: 231
+      startOffset: 18
+      endOffset: 23
+    message: "Se declara \"error\", pero su valor no se lee nunca."
+    severity: INFO
+  - key: "frontend/src/app/components/productos/productos.component.ts:398:18:0"
+    file: frontend/src/app/components/productos/productos.component.ts
+    line: 399
+    textRange:
+      startLine: 399
+      endLine: 399
+      startOffset: 18
+      endOffset: 23
+    message: "Se declara \"error\", pero su valor no se lee nunca."
+    severity: INFO
+  - key: "frontend/src/app/components/proveedores/proveedores.component.ts:161:14:2"
+    file: frontend/src/app/components/proveedores/proveedores.component.ts
+    line: 162
+    textRange:
+      startLine: 162
+      endLine: 162
+      startOffset: 14
+      endOffset: 17
+    message: "Se declara \"err\", pero su valor no se lee nunca."
+    severity: INFO

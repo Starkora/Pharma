@@ -1,0 +1,18 @@
+generatedAt: "2026-03-18T22:10:23.418Z"
+rule: S5411
+count: 1
+details:
+  code: "java:S5411"
+  source: SonarLintScanner
+  path: "c:\\Users\\nabes\\source\\repos\\PharmaSys"
+occurrences[1]:
+  - key: "backend/src/main/java/com/pharmasys/service/BlobStorageService.java:83:17:12"
+    file: backend/src/main/java/com/pharmasys/service/BlobStorageService.java
+    line: 84
+    textRange:
+      startLine: 84
+      endLine: 84
+      startOffset: 17
+      endOffset: 36
+    message: Use a primitive boolean expression here.
+    severity: MAJOR

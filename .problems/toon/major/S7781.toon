@@ -1,0 +1,18 @@
+generatedAt: "2026-03-18T22:10:23.418Z"
+rule: S7781
+count: 1
+details:
+  code: "typescript:S7781"
+  source: SonarLintScanner
+  path: "c:\\Users\\nabes\\source\\repos\\PharmaSys"
+occurrences[1]:
+  - key: "frontend/src/app/pipes/soles.pipe.ts:18:45:32"
+    file: frontend/src/app/pipes/soles.pipe.ts
+    line: 19
+    textRange:
+      startLine: 19
+      endLine: 19
+      startOffset: 45
+      endOffset: 52
+    message: Prefer `String#replaceAll()` over `String#replace()`.
+    severity: MAJOR

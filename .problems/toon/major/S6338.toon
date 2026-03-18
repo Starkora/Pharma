@@ -1,0 +1,28 @@
+generatedAt: "2026-03-18T22:10:23.418Z"
+rule: S6338
+count: 2
+details:
+  code: "secrets:S6338"
+  source: SonarLintScanner
+  path: "c:\\Users\\nabes\\source\\repos\\PharmaSys"
+occurrences[2]:
+  - key: "backend/src/main/resources/application.properties:62:130:35"
+    file: backend/src/main/resources/application.properties
+    line: 63
+    textRange:
+      startLine: 63
+      endLine: 63
+      startOffset: 130
+      endOffset: 218
+    message: "Make sure this Azure Storage Account Key gets revoked, changed, and removed from the code."
+    severity: MAJOR
+  - key: "backend/target/classes/application.properties:62:130:33"
+    file: backend/target/classes/application.properties
+    line: 63
+    textRange:
+      startLine: 63
+      endLine: 63
+      startOffset: 130
+      endOffset: 218
+    message: "Make sure this Azure Storage Account Key gets revoked, changed, and removed from the code."
+    severity: MAJOR

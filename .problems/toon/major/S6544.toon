@@ -1,0 +1,18 @@
+generatedAt: "2026-03-18T22:10:23.418Z"
+rule: S6544
+count: 1
+details:
+  code: "typescript:S6544"
+  source: SonarLintScanner
+  path: "c:\\Users\\nabes\\source\\repos\\PharmaSys"
+occurrences[1]:
+  - key: "frontend/src/app/components/usuarios/usuarios.component.ts:379:10:19"
+    file: frontend/src/app/components/usuarios/usuarios.component.ts
+    line: 380
+    textRange:
+      startLine: 380
+      endLine: 380
+      startOffset: 10
+      endOffset: 17
+    message: Promise-returning function provided to property where a void return was expected.
+    severity: MAJOR

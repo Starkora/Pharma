@@ -1,0 +1,18 @@
+generatedAt: "2026-03-18T22:10:23.418Z"
+rule: S7758
+count: 1
+details:
+  code: "typescript:S7758"
+  source: SonarLintScanner
+  path: "c:\\Users\\nabes\\source\\repos\\PharmaSys"
+occurrences[1]:
+  - key: "frontend/src/app/components/usuarios/usuarios.component.ts:526:17:22"
+    file: frontend/src/app/components/usuarios/usuarios.component.ts
+    line: 527
+    textRange:
+      startLine: 527
+      endLine: 527
+      startOffset: 17
+      endOffset: 27
+    message: Prefer `String#codePointAt()` over `String#charCodeAt()`.
+    severity: MAJOR

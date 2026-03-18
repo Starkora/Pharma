@@ -1,0 +1,18 @@
+generatedAt: "2026-03-18T22:10:23.418Z"
+rule: S1871
+count: 1
+details:
+  code: "typescript:S1871"
+  source: SonarLintScanner
+  path: "c:\\Users\\nabes\\source\\repos\\PharmaSys"
+occurrences[1]:
+  - key: "frontend/src/app/components/usuarios/usuarios.component.ts:448:35:21"
+    file: frontend/src/app/components/usuarios/usuarios.component.ts
+    line: 449
+    textRange:
+      startLine: 449
+      endLine: 452
+      startOffset: 35
+      endOffset: 5
+    message: "This branch's code block is the same as the block for the branch on line 446. [+1 location]"
+    severity: MAJOR

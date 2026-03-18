@@ -15,11 +15,11 @@ interface ValidateSessionResponse {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = `${environment.apiUrl}/auth`;
-  private currentUserSubject: BehaviorSubject<Usuario | null>;
-  public currentUser: Observable<Usuario | null>;
+  private readonly apiUrl = `${environment.apiUrl}/auth`;
+  private readonly currentUserSubject: BehaviorSubject<Usuario | null>;
+  public readonly currentUser: Observable<Usuario | null>;
 
-  constructor(private http: HttpClient) {
+  constructor(private readonly http: HttpClient) {
     // Intentar cargar usuario desde sessionStorage (más seguro que localStorage)
     const storedUser = sessionStorage.getItem('currentUser');
     this.currentUserSubject = new BehaviorSubject<Usuario | null>(

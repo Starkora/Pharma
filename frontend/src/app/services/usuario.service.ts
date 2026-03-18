@@ -6,9 +6,9 @@ import { Usuario } from '../models/auth.model';
 
 @Injectable({ providedIn: 'root' })
 export class UsuarioService {
-  private apiUrl = `${environment.apiUrl}/usuarios`;
+  private readonly apiUrl = `${environment.apiUrl}/usuarios`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
   obtenerTodos(): Observable<Usuario[]> {
     return this.http.get<Usuario[]>(this.apiUrl, { withCredentials: true });

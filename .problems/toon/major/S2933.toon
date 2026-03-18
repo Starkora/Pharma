@@ -1,0 +1,138 @@
+generatedAt: "2026-03-18T22:10:23.418Z"
+rule: S2933
+count: 13
+details:
+  code: "typescript:S2933"
+  source: SonarLintScanner
+  path: "c:\\Users\\nabes\\source\\repos\\PharmaSys"
+occurrences[13]:
+  - key: "frontend/src/app/components/usuarios/usuarios.component.ts:302:4:15"
+    file: frontend/src/app/components/usuarios/usuarios.component.ts
+    line: 303
+    textRange:
+      startLine: 303
+      endLine: 303
+      startOffset: 4
+      endOffset: 26
+    message: "Member 'usuarioService: UsuarioService' is never reassigned; mark it as `readonly`."
+    severity: MAJOR
+  - key: "frontend/src/app/components/usuarios/usuarios.component.ts:303:4:16"
+    file: frontend/src/app/components/usuarios/usuarios.component.ts
+    line: 304
+    textRange:
+      startLine: 304
+      endLine: 304
+      startOffset: 4
+      endOffset: 22
+    message: "Member 'rolService: RolService' is never reassigned; mark it as `readonly`."
+    severity: MAJOR
+  - key: "frontend/src/app/components/usuarios/usuarios.component.ts:304:4:17"
+    file: frontend/src/app/components/usuarios/usuarios.component.ts
+    line: 305
+    textRange:
+      startLine: 305
+      endLine: 305
+      startOffset: 4
+      endOffset: 23
+    message: "Member 'authService: AuthService' is never reassigned; mark it as `readonly`."
+    severity: MAJOR
+  - key: "frontend/src/app/components/usuarios/usuarios.component.ts:305:4:18"
+    file: frontend/src/app/components/usuarios/usuarios.component.ts
+    line: 306
+    textRange:
+      startLine: 306
+      endLine: 306
+      startOffset: 4
+      endOffset: 15
+    message: "Member 'cdr: ChangeDetectorRef' is never reassigned; mark it as `readonly`."
+    severity: MAJOR
+  - key: "frontend/src/app/services/auth.service.ts:17:2:27"
+    file: frontend/src/app/services/auth.service.ts
+    line: 18
+    textRange:
+      startLine: 18
+      endLine: 18
+      startOffset: 2
+      endOffset: 16
+    message: Member 'apiUrl' is never reassigned; mark it as `readonly`.
+    severity: MAJOR
+  - key: "frontend/src/app/services/auth.service.ts:18:2:28"
+    file: frontend/src/app/services/auth.service.ts
+    line: 19
+    textRange:
+      startLine: 19
+      endLine: 19
+      startOffset: 2
+      endOffset: 28
+    message: Member 'currentUserSubject' is never reassigned; mark it as `readonly`.
+    severity: MAJOR
+  - key: "frontend/src/app/services/auth.service.ts:21:14:29"
+    file: frontend/src/app/services/auth.service.ts
+    line: 22
+    textRange:
+      startLine: 22
+      endLine: 22
+      startOffset: 14
+      endOffset: 26
+    message: "Member 'http: HttpClient' is never reassigned; mark it as `readonly`."
+    severity: MAJOR
+  - key: "frontend/src/app/services/facturacion.service.ts:8:2:25"
+    file: frontend/src/app/services/facturacion.service.ts
+    line: 9
+    textRange:
+      startLine: 9
+      endLine: 9
+      startOffset: 2
+      endOffset: 16
+    message: Member 'apiUrl' is never reassigned; mark it as `readonly`.
+    severity: MAJOR
+  - key: "frontend/src/app/services/facturacion.service.ts:10:14:26"
+    file: frontend/src/app/services/facturacion.service.ts
+    line: 11
+    textRange:
+      startLine: 11
+      endLine: 11
+      startOffset: 14
+      endOffset: 26
+    message: "Member 'http: HttpClient' is never reassigned; mark it as `readonly`."
+    severity: MAJOR
+  - key: "frontend/src/app/services/rol.service.ts:13:2:23"
+    file: frontend/src/app/services/rol.service.ts
+    line: 14
+    textRange:
+      startLine: 14
+      endLine: 14
+      startOffset: 2
+      endOffset: 16
+    message: Member 'apiUrl' is never reassigned; mark it as `readonly`.
+    severity: MAJOR
+  - key: "frontend/src/app/services/rol.service.ts:15:14:24"
+    file: frontend/src/app/services/rol.service.ts
+    line: 16
+    textRange:
+      startLine: 16
+      endLine: 16
+      startOffset: 14
+      endOffset: 26
+    message: "Member 'http: HttpClient' is never reassigned; mark it as `readonly`."
+    severity: MAJOR
+  - key: "frontend/src/app/services/usuario.service.ts:8:2:36"
+    file: frontend/src/app/services/usuario.service.ts
+    line: 9
+    textRange:
+      startLine: 9
+      endLine: 9
+      startOffset: 2
+      endOffset: 16
+    message: Member 'apiUrl' is never reassigned; mark it as `readonly`.
+    severity: MAJOR
+  - key: "frontend/src/app/services/usuario.service.ts:10:14:37"
+    file: frontend/src/app/services/usuario.service.ts
+    line: 11
+    textRange:
+      startLine: 11
+      endLine: 11
+      startOffset: 14
+      endOffset: 26
+    message: "Member 'http: HttpClient' is never reassigned; mark it as `readonly`."
+    severity: MAJOR

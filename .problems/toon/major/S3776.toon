@@ -1,0 +1,18 @@
+generatedAt: "2026-03-18T22:10:23.418Z"
+rule: S3776
+count: 1
+details:
+  code: "java:S3776"
+  source: SonarLintScanner
+  path: "c:\\Users\\nabes\\source\\repos\\PharmaSys"
+occurrences[1]:
+  - key: "backend/src/main/java/com/pharmasys/service/WhatsAppNotificationService.java:45:16:10"
+    file: backend/src/main/java/com/pharmasys/service/WhatsAppNotificationService.java
+    line: 46
+    textRange:
+      startLine: 46
+      endLine: 46
+      startOffset: 16
+      endOffset: 39
+    message: "Refactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed. [+19 locations]"
+    severity: MAJOR
