@@ -123,8 +123,8 @@ export class CategoriasComponent implements OnInit {
   mostrandoFormulario = false;
 
   constructor(
-    private categoriaService: CategoriaService,
-    private cdr: ChangeDetectorRef
+    private readonly categoriaService: CategoriaService,
+    private readonly cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
